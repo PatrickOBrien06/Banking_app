@@ -1,4 +1,4 @@
-This is an online banking app using build using flask and SQLAlchemy. It is a development server currently and is not deployed.
+This is an online banking app built using flask and flask-SQLAlchemy. It is a development server currently and is not deployed.
 
 It contains 2 tables:
     Users - For storing login and user data
