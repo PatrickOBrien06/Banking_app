@@ -66,7 +66,7 @@ def logout():
 @login_required
 def transactions():
     if request.method == 'POST':
-        amount = int(request.form.get('amount'))
+        amount = float(request.form.get('amount'))
         receiver_email = request.form.get('receiver_email')
         sender_email = request.form.get('sender_email')
         sender_password = request.form.get('sender_password')
@@ -84,13 +84,15 @@ def transactions():
             flash('Receiver Email doesn\'t exist.', category='error')
         
         elif user.balance < amount:
-            flash('You have insufficient funds to perform the transfer.', category='error')
+            flash('You have insufficient funds to perform the transaction.', category='error')
 
         else:
             user.balance -= amount
             receiver.balance += amount
+            round(user.balance, 2)
+            round(receiver.balance, 2)
             db.session.commit()
-            flash('Transfer Successful', category='success')
+            flash('Transfer Successful!', category='success')
 
 
 
