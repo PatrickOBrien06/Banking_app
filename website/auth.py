@@ -91,10 +91,12 @@ def transactions():
             receiver.balance += amount
             round(user.balance, 2)
             round(receiver.balance, 2)
+            new_transaction = History(sender_id=current_user.id, receiver_id=receiver.id, amount_sent=amount, transaction_type='fund_transfer')
+            current_user.sent_history.append(new_transaction)
+            receiver.received_history.append(new_transaction)
+            db.session.add(new_transaction)
             db.session.commit()
             flash('Transfer Successful!', category='success')
-
-
 
     return render_template('transactions.html')
     
