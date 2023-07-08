@@ -66,37 +66,70 @@ def logout():
 @login_required
 def transactions():
     if request.method == 'POST':
+        transaction_type = request.form.get('transaction_type')
         amount = float(request.form.get('amount'))
         receiver_email = request.form.get('receiver_email')
         sender_email = request.form.get('sender_email')
         sender_password = request.form.get('sender_password')
 
-        user = Users.query.filter_by(email=sender_email).first()
-        receiver = Users.query.filter_by(email=receiver_email).first()
+        if transaction_type == 'transfer_funds':
+            receiver = Users.query.filter_by(email=receiver_email).first()
+            user = Users.query.filter_by(email=sender_email).first()
 
-        if not amount or not receiver_email or not sender_email or not sender_password:
-            flash('Please fill in all information', category='error')
+            if not amount or not receiver_email or not sender_email or not sender_password:
+                        flash('Please fill in all information', category='error')
 
-        elif not user or not check_password_hash(user.password, sender_password):
-            flash('Email or Password invalid.', category='error')
-        
-        elif not receiver:
-            flash('Receiver Email doesn\'t exist.', category='error')
-        
-        elif user.balance < amount:
-            flash('You have insufficient funds to perform the transaction.', category='error')
+            elif not user or not check_password_hash(user.password, sender_password):
+                        flash('Email or Password invalid.', category='error')
+                    
+            elif not receiver:
+                        flash('Receiver Email doesn\'t exist.', category='error')
+                    
+            elif user.balance < amount:
+                        flash('You have insufficient funds to perform the transaction.', category='error')
+                    
+            else:  
+                user.balance -= amount
+                receiver.balance += amount
+                user.balance = round(current_user.balance, 2)
+                receiver.balance = round(receiver.balance, 2)
+                new_transaction = History(sender_id=current_user.id, receiver_id=receiver.id, amount_sent=amount, transaction_type=transaction_type)
+                user.sent_history.append(new_transaction)
+                receiver.received_history.append(new_transaction)
+                db.session.add(new_transaction)
+                db.session.commit()
+                flash('Transfer Successful!', category='success')
 
+        # Deposit
+        elif transaction_type == 'deposit':
+            user = Users.query.filter_by(email=sender_email).first()
+
+            # Check if not empty
+            if not amount or not sender_email or not sender_password:
+                flash('Please fill in all information', category='error')
+
+            # Check if the inputs are valid 
+            elif not user or not check_password_hash(current_user.password, sender_password):
+                flash('Email or Password invalid.', category='error')
+
+            # Check to make sure you are logged in
+            elif not current_user:
+                flash('You must be logged in to that account.', category='error')
+            
+            # Run Deposit Logic
+            else:
+                user.balance += amount 
+                user.balance = round(user.balance, 2)
+                new_transaction = History(sender_id=user.id, receiver_id=user.id, amount_sent=amount, transaction_type=transaction_type)
+                user.sent_history.append(new_transaction)
+                user.received_history.append(new_transaction)
+                db.session.add(new_transaction)
+                db.session.commit()
+                flash('Deposit Successful!', category='success')
+
+        # If no transaction type Just in Case
         else:
-            user.balance -= amount
-            receiver.balance += amount
-            user.balance = round(user.balance, 2)
-            receiver.balance = round(receiver.balance, 2)
-            new_transaction = History(sender_id=current_user.id, receiver_id=receiver.id, amount_sent=amount, transaction_type='fund_transfer')
-            current_user.sent_history.append(new_transaction)
-            receiver.received_history.append(new_transaction)
-            db.session.add(new_transaction)
-            db.session.commit()
-            flash('Transfer Successful!', category='success')
-
+            flash('Transaction Unsuccessful', category='error')
+        
     return render_template('transactions.html')
     
