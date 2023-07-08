@@ -89,8 +89,8 @@ def transactions():
         else:
             user.balance -= amount
             receiver.balance += amount
-            round(user.balance, 2)
-            round(receiver.balance, 2)
+            user.balance = round(user.balance, 2)
+            receiver.balance = round(receiver.balance, 2)
             new_transaction = History(sender_id=current_user.id, receiver_id=receiver.id, amount_sent=amount, transaction_type='fund_transfer')
             current_user.sent_history.append(new_transaction)
             receiver.received_history.append(new_transaction)
