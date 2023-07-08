@@ -4,18 +4,26 @@ It contains 2 tables:
     Users - For storing login and user data
     History - For saving transaction history 
 
-It runs locally on a server at port 5000 in http://127.0.0.1:5000
+    Step 1: In CMD or shell 'pip install flask flask-sqlalchemy flask-login'
+    Step 2: Run the web app in Text Editor
+    Steo 3: Open Web browser and enter http://127.0.0.1/5000
+    Step 4: Use and test the app to your Heart's Content!
 
-When it loads it will require you to login to be able to go to home.
-
-Once completed, the home page should load.
-
-
-
-
+To use simply create an account and enter account balance.
+After doing this you should be redirected to the home page.
+Here to perform Transactions click on Transactions.
+Now you can navigate through transaction options.
+After a transaction all data will be stored in History and linked to that account.
 
 
-Once finished you may logout. 
+
+
+
+
+
+
+
+
 
 
 
