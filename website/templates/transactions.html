@@ -46,11 +46,11 @@
                 <div class="form-group" style="margin: 70px;">
                     <input type="hidden" id="transaction_type" name="transaction_type" value="deposit">
                     <label style="margin-top: 10px;" for="amount">Enter Amount</label>
-                    <input type="number" step="0.01" min="0.01" id="amount" name="amount" class="form-control" placeholder="Enter Deposit Amount" required>
+                    <input type="number" step="0.01" min="0.01" id="amount" name="amount" class="form-control" placeholder="Enter Deposit Amount">
                     <label style="margin-top: 10px;" for="sender_email">Enter Email</label>
-                    <input type="email" id="sender_email" name="sender_email" class="form-control" placeholder="Enter Email" required>
+                    <input type="email" id="sender_email" name="sender_email" class="form-control" placeholder="Enter Email">
                     <label style="margin-top: 10px;" for="sender_password">Enter Password</label>
-                    <input type="password" id="sender_password" name="sender_password" class="form-control" placeholder="Enter Password" required>
+                    <input type="password" id="sender_password" name="sender_password" class="form-control" placeholder="Enter Password">
                     <br>
                     <div align="center">
                         <button class="btn btn-primary" type="submit">Deposit</button>
@@ -59,7 +59,22 @@
             </form>
         </div>
         <div class="tab-pane fade" id="withdrawal-tab-pane" role="tabpanel" aria-labelledby="withdrawal-tab" tabindex="0">
-        ...
+            <form method="POST">
+                <h3 align="center" style="margin-top: 50px;">Withdrawal</h3>
+                <div class="form-group" style="margin: 70px;">
+                    <input type="hidden" id="transaction_type" name="transaction_type" value="withdrawal">
+                    <label style="margin-top: 10px;" for="amount">Enter Withdrawal Amount</label>
+                    <input type="number" step="0.01" min="0.01" id="amount" name="amount" class="form-control" placeholder="Enter Withdrawal Amount">
+                    <label style="margin-top: 10px;" for="sender_email">Enter Email</label>
+                    <input type="email" id="sender_email" name="sender_email" class="form-control" placeholder="Enter Email">
+                    <label style="margin-top: 10px;" for="sender_password">Enter Password</label>
+                    <input type="password" id="sender_password" name="sender_password" class="form-control" placeholder="Enter Password">
+                    <br>
+                    <div align="center">
+                        <button class="btn btn-primary" type="submit">Withdraw</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
     </div>

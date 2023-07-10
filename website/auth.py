@@ -113,7 +113,7 @@ def transactions():
                 flash('Email or Password invalid.', category='error')
 
             # Check to make sure you are logged into the account
-            elif current_user.email != user:
+            elif not current_user:
                 flash('You must be logged into the account to deposit to it.', category='error')
             
             # Run Deposit Logic
@@ -127,7 +127,37 @@ def transactions():
                 db.session.commit()
                 flash('Deposit Successful!', category='success')
 
-        # If no transaction type just in case
+        # Withdrawal
+        elif transaction_type == 'withdrawal':
+            user = Users.query.filter_by(email=sender_email).first()
+
+            # Check if not empty
+            if not amount or not sender_email or not sender_password:
+                flash('Please fill in all information', category='error')
+
+            # Check if the inputs are valid 
+            elif not user or not check_password_hash(current_user.password, sender_password):
+                flash('Email or Password invalid.', category='error')
+
+            # Check to make sure you are logged into the account
+            elif not current_user:
+                flash('You must be logged into the account to withdraw from it.', category='error')
+            
+            elif user.balance < amount:
+                        flash('You have insufficient funds to perform the transaction.', category='error')
+            
+            # Run Withdrawal Logic
+            else:
+                user.balance -= amount 
+                user.balance = round(user.balance, 2)
+                new_transaction = History(sender_id=user.id, receiver_id=user.id, amount_sent=amount, transaction_type=transaction_type)
+                user.sent_history.append(new_transaction)
+                user.received_history.append(new_transaction)
+                db.session.add(new_transaction)
+                db.session.commit()
+                flash('Withdrawal Successful!', category='success')
+
+        # If no transaction type (just in case)
         else:
             flash('Transaction Unsuccessful', category='error')
         
