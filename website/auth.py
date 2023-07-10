@@ -143,6 +143,7 @@ def transactions():
             elif not current_user:
                 flash('You must be logged into the account to withdraw from it.', category='error')
             
+            # Check if sufficient funds 
             elif user.balance < amount:
                         flash('You have insufficient funds to perform the transaction.', category='error')
             
@@ -156,6 +157,35 @@ def transactions():
                 db.session.add(new_transaction)
                 db.session.commit()
                 flash('Withdrawal Successful!', category='success')
+
+        # Payments
+        if transaction_type == 'payment':
+            receiver = Users.query.filter_by(email=receiver_email).first()
+            user = Users.query.filter_by(email=sender_email).first()
+
+            if not amount or not receiver_email or not sender_email or not sender_password:
+                        flash('Please fill in all information', category='error')
+
+            elif not user or not check_password_hash(user.password, sender_password):
+                        flash('Email or Password invalid.', category='error')
+                    
+            elif not receiver:
+                        flash('Receiver Email doesn\'t exist.', category='error')
+                    
+            elif user.balance < amount:
+                        flash('You have insufficient funds to perform the transaction.', category='error')
+                    
+            else:  
+                user.balance -= amount
+                receiver.balance += amount
+                user.balance = round(current_user.balance, 2)
+                receiver.balance = round(receiver.balance, 2)
+                new_transaction = History(sender_id=current_user.id, receiver_id=receiver.id, amount_sent=amount, transaction_type=transaction_type)
+                user.sent_history.append(new_transaction)
+                receiver.received_history.append(new_transaction)
+                db.session.add(new_transaction)
+                db.session.commit()
+                flash('Payment Successful!', category='success')
 
         # If no transaction type (just in case)
         else:
