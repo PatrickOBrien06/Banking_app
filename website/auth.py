@@ -159,7 +159,7 @@ def transactions():
                 flash('Withdrawal Successful!', category='success')
 
         # Payments
-        if transaction_type == 'payment':
+        elif transaction_type == 'payment':
             receiver = Users.query.filter_by(email=receiver_email).first()
             user = Users.query.filter_by(email=sender_email).first()
 
