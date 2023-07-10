@@ -4,20 +4,20 @@
 <div class="container-fluid">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Transfer Funds</button>
+        <button class="nav-link active" id="transfer-tab" data-bs-toggle="tab" data-bs-target="#transfer-tab-pane" type="button" role="tab" aria-controls="transfer-tab-pane" aria-selected="true">Transfer Funds</button>
         </li>
         <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Payments</button>
+        <button class="nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment-tab-pane" type="button" role="tab" aria-controls="payment-tab-pane" aria-selected="false">Payments</button>
         </li>
         <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Deposit</button>
+        <button class="nav-link" id="deposit-tab" data-bs-toggle="tab" data-bs-target="#deposit-tab-pane" type="button" role="tab" aria-controls="deposit-tab-pane" aria-selected="false">Deposit</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Withdrawal</button>
+            <button class="nav-link" id="withdrawal-tab" data-bs-toggle="tab" data-bs-target="#withdrawal-tab-pane" type="button" role="tab" aria-controls="withdrawal-tab-pane" aria-selected="false">Withdrawal</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <div class="tab-pane fade show active" id="transfer-tab-pane" role="tabpanel" aria-labelledby="transfer-tab" tabindex="0">
             <form method="POST">
                 <h3 align="center" style="margin-top: 50px;">Transfer Funds</h3>
                 <div class="form-group" style="margin: 70px;">
@@ -37,27 +37,10 @@
                 </div>
             </form>
         </div>
-        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <form method="POST">
-                <h3 align="center" style="margin-top: 50px;">Enter</h3>
-                <div class="form-group" style="margin: 70px;">
-                    <input type="hidden" id="transaction_type" name="transaction_type" value="transfer_funds">
-                    <label style="margin-top: 10px;" for="amount">Amount</label>
-                    <input type="number" step="0.01" min="0" id="amount" name="amount" class="form-control" placeholder="Enter Transfer Amount">
-                    <label style="margin-top: 10px;" for="sender_email">Receiver Email</label>
-                    <input type="email" id="receiver_email" name="receiver_email" class="form-control" placeholder="Enter Receiver Email">
-                    <label style="margin-top: 10px;" for="sender_email">Enter Email</label>
-                    <input type="email" id="sender_email" name="sender_email" class="form-control" placeholder="Enter Email">
-                    <label style="margin-top: 10px;" for="sender_password">Enter Password</label>
-                    <input type="password" id="sender_password" name="sender_password" class="form-control" placeholder="Enter Password">
-                    <br>
-                    <div align="center">
-                        <button class="btn btn-primary" type="submit">Transfer</button>
-                    </div>
-                </div>
-            </form>
+        <div class="tab-pane fade" id="payment-tab-pane" role="tabpanel" aria-labelledby="payment-tab" tabindex="0">
+        ...
         </div>
-        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+        <div class="tab-pane fade" id="deposit-tab-pane" role="tabpanel" aria-labelledby="deposit-tab" tabindex="0">
             <form method="POST">
                 <h3 align="center" style="margin-top: 50px;">Deposit</h3>
                 <div class="form-group" style="margin: 70px;">
@@ -74,6 +57,9 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="tab-pane fade" id="withdrawal-tab-pane" role="tabpanel" aria-labelledby="withdrawal-tab" tabindex="0">
+        ...
         </div>
         <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
     </div>

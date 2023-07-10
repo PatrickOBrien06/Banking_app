@@ -112,9 +112,9 @@ def transactions():
             elif not user or not check_password_hash(current_user.password, sender_password):
                 flash('Email or Password invalid.', category='error')
 
-            # Check to make sure you are logged in
-            elif not current_user:
-                flash('You must be logged in to that account.', category='error')
+            # Check to make sure you are logged into the account
+            elif current_user.email != user:
+                flash('You must be logged into the account to deposit to it.', category='error')
             
             # Run Deposit Logic
             else:
@@ -127,7 +127,7 @@ def transactions():
                 db.session.commit()
                 flash('Deposit Successful!', category='success')
 
-        # If no transaction type Just in Case
+        # If no transaction type just in case
         else:
             flash('Transaction Unsuccessful', category='error')
         
