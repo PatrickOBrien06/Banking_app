@@ -61,33 +61,40 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-# Page for trans
+# Page for transaction
 @auth.route('/transactions', methods=['GET', 'POST'])
 @login_required
 def transactions():
+    # Transfer
     if request.method == 'POST':
         transaction_type = request.form.get('transaction_type')
         amount = float(request.form.get('amount'))
         receiver_email = request.form.get('receiver_email')
         sender_email = request.form.get('sender_email')
         sender_password = request.form.get('sender_password')
-
+        
+        # Check if type is transfer
         if transaction_type == 'transfer_funds':
             receiver = Users.query.filter_by(email=receiver_email).first()
             user = Users.query.filter_by(email=sender_email).first()
 
+            # Check if inputs not empty
             if not amount or not receiver_email or not sender_email or not sender_password:
                         flash('Please fill in all information', category='error')
 
+            # Check if inputs valid 
             elif not user or not check_password_hash(user.password, sender_password):
                         flash('Email or Password invalid.', category='error')
-                    
+            
+            # Check if receiver exists
             elif not receiver:
                         flash('Receiver Email doesn\'t exist.', category='error')
                     
+            # Check if have sufficient funds
             elif user.balance < amount:
                         flash('You have insufficient funds to perform the transaction.', category='error')
-                    
+                
+            # Run Transfer Logic
             else:  
                 user.balance -= amount
                 receiver.balance += amount
@@ -192,4 +199,3 @@ def transactions():
             flash('Transaction Unsuccessful', category='error')
         
     return render_template('transactions.html')
-    

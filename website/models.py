@@ -11,7 +11,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(150), nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     balance = db.Column(db.Float, default=0)
-
+    
 
 # Create History Table
 class History(db.Model, UserMixin):
